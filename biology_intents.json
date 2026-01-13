@@ -1,0 +1,274 @@
+{
+  "intents": [
+    {
+      "tag": "cell_biology",
+      "patterns": [
+        "What is a cell?",
+        "Define cell",
+        "Unit of life",
+        "সেল কি?",
+        "কোষ কাকে বলে?",
+        "জীবনের একক"
+      ],
+      "responses": [
+        "Cell is the basic structural and functional unit of life. According to Class 9-10 Biology: \"All living organisms are composed of cells.\"",
+        "কোষ হল জীবনের মৌলিক গাঠনিক ও কার্যকরী একক। নবম-দশম শ্রেণির জীববিজ্ঞান অনুসারে: \"সকল জীব কোষ দ্বারা গঠিত।\"",
+        "The cell theory states: 1. All living things are made of cells, 2. Cells are the basic unit of life, 3. New cells come from existing cells."
+      ]
+    },
+    {
+      "tag": "cell_division",
+      "patterns": [
+        "What is mitosis?",
+        "মাইটোসিস কী?",
+        "Cell division types",
+        "কোষ বিভাজন",
+        "Difference between mitosis and meiosis",
+        "মাইটোসিস ও মিয়োসিসের পার্থক্য"
+      ],
+      "responses": [
+        "Mitosis is equational division producing two identical daughter cells. Stages: Prophase, Metaphase, Anaphase, Telophase.",
+        "মাইটোসিস হল সমবিভাজন যা দুইটি অভিন্ন কোষ সৃষ্টি করে। ধাপ: প্রোফেজ, মেটাফেজ, অ্যানাফেজ, টেলোফেজ।",
+        "Mitosis vs Meiosis:\n- Mitosis: Somatic cells, 2 daughter cells, Diploid (2n)\n- Meiosis: Germ cells, 4 daughter cells, Haploid (n)"
+      ]
+    },
+    {
+      "tag": "tissue",
+      "patterns": [
+        "What is tissue?",
+        "টিস্যু কাকে বলে?",
+        "Types of plant tissues",
+        "উদ্ভিদ টিস্যু",
+        "Meristematic tissue",
+        "মেরিস্টেম টিস্যু"
+      ],
+      "responses": [
+        "Tissue is a group of cells having similar structure and function. Plant tissues: 1. Meristematic 2. Permanent",
+        "টিস্যু হল একই গঠন ও কার্য সম্পাদনকারী কোষের সমষ্টি। উদ্ভিদ টিস্যু: ১. বিভাজনক্ষম ২. স্থায়ী",
+        "Meristematic tissue helps in growth. Permanent tissues: Parenchyma, Collenchyma, Sclerenchyma."
+      ]
+    },
+    {
+      "tag": "photosynthesis",
+      "patterns": [
+        "What is photosynthesis?",
+        "সালোকসংশ্লেষণ কী?",
+        "Process of photosynthesis",
+        "Photosynthesis equation",
+        "সালোকসংশ্লেষণের রাসায়নিক সমীকরণ"
+      ],
+      "responses": [
+        "Photosynthesis: Process by which green plants make food using sunlight, water, CO₂. Equation: 6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂",
+        "সালোকসংশ্লেষণ: সবুজ উদ্ভিদ সূর্যালোক, পানি ও কার্বন ডাই-অক্সাইড ব্যবহার করে খাদ্য প্রস্তুত করে। সমীকরণ: ৬CO₂ + ৬H₂O → C₆H₁₂O₆ + ৬O₂",
+        "Occurs in chloroplasts. Light and dark reactions. Essential for oxygen production."
+      ]
+    },
+    {
+      "tag": "human_digestive_system",
+      "patterns": [
+        "Human digestive system",
+        "মানব পরিপাক তন্ত্র",
+        "Parts of digestive system",
+        "পরিপাকের ধাপ",
+        "Enzymes in digestion",
+        "পরিপাকে উৎসেচকের ভূমিকা"
+      ],
+      "responses": [
+        "Human digestive system parts: Mouth, Esophagus, Stomach, Small intestine, Large intestine, Rectum.",
+        "মানব পরিপাক তন্ত্রের অংশ: মুখগহ্বর, অন্ননালী, পাকস্থলী, ক্ষুদ্রান্ত্র, বৃহদন্ত্র, মলাশয়।",
+        "Enzymes: Amylase (mouth), Pepsin (stomach), Trypsin (pancreas), Lipase (fat digestion)."
+      ]
+    },
+    {
+      "tag": "respiratory_system",
+      "patterns": [
+        "Human respiratory system",
+        "শ্বসন তন্ত্র",
+        "Process of respiration",
+        "শ্বসনের ধাপ",
+        "Difference between breathing and respiration",
+        "শ্বাসপ্রশ্বাস ও শ্বসনের পার্থক্য"
+      ],
+      "responses": [
+        "Respiratory system: Nose, Pharynx, Larynx, Trachea, Bronchi, Lungs. Breathing is physical, respiration is biochemical.",
+        "শ্বসন তন্ত্র: নাক, গলবিল, স্বরযন্ত্র, শ্বাসনালী, ব্রংকাই, ফুসফুস। শ্বাসপ্রশ্বাস ভৌতিক, শ্বসন জৈবরাসায়নিক প্রক্রিয়া।",
+        "Respiration equation: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + Energy"
+      ]
+    },
+    {
+      "tag": "circulatory_system",
+      "patterns": [
+        "Circulatory system",
+        "রক্ত সংবহন তন্ত্র",
+        "Human heart structure",
+        "হৃদপিণ্ডের গঠন",
+        "Blood components",
+        "রক্তের উপাদান"
+      ],
+      "responses": [
+        "Circulatory system: Heart, Blood vessels (arteries, veins, capillaries), Blood. Heart has 4 chambers: 2 atria, 2 ventricles.",
+        "রক্ত সংবহন তন্ত্র: হৃদপিণ্ড, রক্তনালী (ধমনী, শিরা, কৈশিক), রক্ত। হৃদপিণ্ডের ৪ প্রকোষ্ঠ: ২ অলিন্দ, ২ নিলয়।",
+        "Blood components: Plasma (55%), RBCs (carry O₂), WBCs (immunity), Platelets (clotting)."
+      ]
+    },
+    {
+      "tag": "nervous_system",
+      "patterns": [
+        "Nervous system",
+        "স্নায়ুতন্ত্র",
+        "Neuron structure",
+        "নিউরনের গঠন",
+        "Brain parts",
+        "মস্তিষ্কের অংশ"
+      ],
+      "responses": [
+        "Nervous system: Central (brain, spinal cord) and Peripheral (nerves). Neuron: Cell body, dendrites, axon.",
+        "স্নায়ুতন্ত্র: কেন্দ্রীয় (মস্তিষ্ক, সুষুম্নাকাণ্ড) ও প্রান্তীয় (স্নায়ু)। নিউরন: কোষদেহ, ডেনড্রাইট, অ্যাক্সন।",
+        "Brain parts: Cerebrum (thinking), Cerebellum (balance), Medulla (vital functions)."
+      ]
+    },
+    {
+      "tag": "excretory_system",
+      "patterns": [
+        "Excretory system",
+        "রেচন তন্ত্র",
+        "Human kidney",
+        "মানব কিডনি",
+        "Nephron function",
+        "নেফ্রনের কাজ"
+      ],
+      "responses": [
+        "Excretory system: Kidneys, Ureters, Urinary bladder, Urethra. Removes urea, excess water, salts.",
+        "রেচন তন্ত্র: বৃক্ক, মূত্রবাহী নালী, মূত্রথলি, মূত্রনালী। ইউরিয়া, অতিরিক্ত পানি ও লবণ নির্গত করে।",
+        "Nephron: Functional unit of kidney. Filtration, reabsorption, secretion."
+      ]
+    },
+    {
+      "tag": "reproduction",
+      "patterns": [
+        "Human reproduction",
+        "মানব প্রজনন",
+        "Male reproductive system",
+        "পুরুষ প্রজনন তন্ত্র",
+        "Female reproductive system",
+        "মহিলা প্রজনন তন্ত্র"
+      ],
+      "responses": [
+        "Male: Testes, Vas deferens, Prostate. Female: Ovaries, Fallopian tubes, Uterus, Vagina.",
+        "পুরুষ: শুক্রাশয়, শুক্রবাহী নালী, প্রোস্টেট। মহিলা: ডিম্বাশয়, ডিম্ববাহী নালী, জরায়ু, যোনি।",
+        "Menstrual cycle: 28 days. Fertilization in fallopian tube."
+      ]
+    },
+    {
+      "tag": "genetics",
+      "patterns": [
+        "What is genetics?",
+        "জিনতত্ত্ব কী?",
+        "Mendel's laws",
+        "মেন্ডেলের সূত্র",
+        "DNA structure",
+        "ডিএনএ-র গঠন"
+      ],
+      "responses": [
+        "Genetics: Study of heredity and variation. Mendel's laws: 1. Law of segregation 2. Law of independent assortment.",
+        "জিনতত্ত্ব: বংশগতি ও প্রকরণের অধ্যয়ন। মেন্ডেলের সূত্র: ১. পৃথকীকরণের সূত্র ২. স্বাধীন সঞ্চারণের সূত্র।",
+        "DNA: Double helix, nucleotides (A,T,G,C). Genes are DNA segments."
+      ]
+    },
+    {
+      "tag": "ecosystem",
+      "patterns": [
+        "What is ecosystem?",
+        "পরিবেশতন্ত্র কী?",
+        "Components of ecosystem",
+        "পরিবেশতন্ত্রের উপাদান",
+        "Food chain",
+        "খাদ্য শৃঙ্খল"
+      ],
+      "responses": [
+        "Ecosystem: Community of living organisms + physical environment. Components: Biotic (living) + Abiotic (non-living).",
+        "পরিবেশতন্ত্র: জীবসম্প্রদায় + ভৌত পরিবেশ। উপাদান: জৈবিক (সজীব) + অজৈবিক (নির্জীব)।",
+        "Food chain: Producer → Primary consumer → Secondary consumer → Decomposer."
+      ]
+    },
+    {
+      "tag": "biodiversity",
+      "patterns": [
+        "What is biodiversity?",
+        "জৈববৈচিত্র্য কী?",
+        "Importance of biodiversity",
+        "জৈববৈচিত্র্যের গুরুত্ব",
+        "Bangladesh biodiversity",
+        "বাংলাদেশের জৈববৈচিত্র্য"
+      ],
+      "responses": [
+        "Biodiversity: Variety of life forms at genetic, species, ecosystem levels. Bangladesh has Sundarbans (Royal Bengal Tiger).",
+        "জৈববৈচিত্র্য: জিনগত, প্রজাতিগত ও পরিবেশতান্ত্রিক পর্যায়ে জীবনের বৈচিত্র্য। বাংলাদেশের সুন্দরবনে রয়েছে রয়েল বেঙ্গল টাইগার।",
+        "Importance: Ecosystem stability, Medicine source, Food security, Climate regulation."
+      ]
+    },
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi",
+        "Hello",
+        "Assalamualaikum",
+        "আসসালামু আলাইকুম",
+        "কেমন আছো?",
+        "How are you?"
+      ],
+      "responses": [
+        "Assalamualaikum! I'm your Biology Study Assistant. How can I help you today?",
+        "আসসালামু আলাইকুম! আমি আপনার জীববিজ্ঞান সহায়ক। কীভাবে সাহায্য করতে পারি?",
+        "Hello! Ready to learn Class 9-10 Biology?"
+      ]
+    },
+    {
+      "tag": "thanks",
+      "patterns": [
+        "Thanks",
+        "Thank you",
+        "ধন্যবাদ",
+        "Shukriya",
+        "শুকরিয়া",
+        "Appreciate it"
+      ],
+      "responses": [
+        "You're welcome! Keep studying!",
+        "আপনাকেও ধন্যবাদ! পড়াশোনা চালিয়ে যান!",
+        "Happy to help! Feel free to ask more questions."
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": [
+        "Bye",
+        "Goodbye",
+        "Khuda Hafiz",
+        "খোদা হাফেজ",
+        "See you",
+        "বিদায়"
+      ],
+      "responses": [
+        "Goodbye! Best of luck for your exams!",
+        "খোদা হাফেজ! পরীক্ষার জন্য শুভকামনা!",
+        "See you! Remember to revise regularly."
+      ]
+    },
+    {
+      "tag": "help",
+      "patterns": [
+        "Help",
+        "What can you do?",
+        "সাহায্য করুন",
+        "What topics do you know?",
+        "কোন কোন টপিক জানো?"
+      ],
+      "responses": [
+        "I can explain Biology topics from Class 9-10: Cells, Tissues, Photosynthesis, Human body systems, Genetics, Ecology etc.",
+        "আমি নবম-দশম শ্রেণির জীববিজ্ঞানের বিষয় বুঝাতে পারি: কোষ, টিস্যু, সালোকসংশ্লেষণ, মানবদেহের তন্ত্র, জিনতত্ত্ব, বাস্তুবিদ্যা ইত্যাদি।",
+        "Try asking: 'What is photosynthesis?' or 'Explain human digestive system'"
+      ]
+    }
+  ]
+}
