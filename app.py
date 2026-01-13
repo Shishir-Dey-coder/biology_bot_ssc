@@ -1,173 +1,149 @@
+import os
+import sys
 from flask import Flask, render_template, request, jsonify
-import numpy as np
-import random
 import json
+import random
 import pickle
-import nltk
-from nltk.stem import WordNetLemmatizer
-import tensorflow as tf
-import ssl
-
-print("=" * 60)
-print("🧬 BANGLADESH CLASS 9-10 BIOLOGY STUDY ASSISTANT")
-print("=" * 60)
-
-# SSL fix
-try:
-    _create_unverified_https_context = ssl._create_unverified_context
-except AttributeError:
-    pass
-else:
-    ssl._create_default_https_context = _create_unverified_https_context
+import re
 
 app = Flask(__name__)
 
-# Load Biology model and data
-print("\n📦 Loading Biology knowledge base...")
+# Try to import optional dependencies
+try:
+    import nltk
+    NLTK_AVAILABLE = True
+    # Try to download data if not present
+    try:
+        nltk.data.find('tokenizers/punkt')
+    except LookupError:
+        nltk.download('punkt', quiet=True)
+except ImportError:
+    NLTK_AVAILABLE = False
+    print("⚠️ NLTK not available, using simple mode")
 
 try:
-    # Load TensorFlow model
-    model = tf.keras.models.load_model('chatbot_model.h5')
-    print("✅ Loaded AI model (chatbot_model.h5)")
-    
-    # Load vocabulary
-    with open('words.pkl', 'rb') as f:
-        words = pickle.load(f)
-    print(f"✅ Loaded vocabulary ({len(words)} words)")
-    
-    # Load topics
-    with open('classes.pkl', 'rb') as f:
-        classes = pickle.load(f)
-    print(f"✅ Loaded {len(classes)} Biology topics")
-    
-    # Load Biology intents
+    import joblib
+    import numpy as np
+    ML_AVAILABLE = True
+except ImportError:
+    ML_AVAILABLE = False
+    print("⚠️ Machine learning libraries not available")
+
+# Load biology data
+try:
     with open('biology_intents.json', 'r', encoding='utf-8') as f:
         intents = json.load(f)
-    print("✅ Loaded Biology curriculum data")
-    
-except Exception as e:
-    print(f"❌ Error: {e}")
-    print("💡 Please run train.py first!")
-    exit(1)
+    print("✅ Loaded biology knowledge base")
+except FileNotFoundError:
+    print("❌ biology_intents.json not found")
+    intents = {"intents": []}
 
-lemmatizer = WordNetLemmatizer()
+# Simple keyword responses for fallback
+KEYWORD_RESPONSES = {
+    'cell': 'কোষ হল জীবনের মৌলিক গাঠনিক ও কার্যকরী একক। সকল জীব কোষ দ্বারা গঠিত।',
+    'photosynthesis': 'সালোকসংশ্লেষণ: সবুজ উদ্ভিদ সূর্যালোক, পানি ও কার্বন ডাই-অক্সাইড ব্যবহার করে শর্করা তৈরি করে।',
+    'mitosis': 'মাইটোসিস হল সমবিভাজন যা দুইটি অভিন্ন কোষ সৃষ্টি করে।',
+    'respiration': 'শ্বসন: C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + শক্তি',
+    'genetics': 'জিনতত্ত্ব বংশগতি ও প্রকরণের অধ্যয়ন। মেন্ডেল জিনতত্ত্বের জনক।',
+    'ecology': 'বাস্তুবিদ্যা জীব ও পরিবেশের পারস্পরিক সম্পর্ক নিয়ে আলোচনা করে।',
+    'tissue': 'টিস্যু হল একই গঠন ও কার্য সম্পাদনকারী কোষের সমষ্টি।',
+    'hello': 'আসসালামু আলাইকুম! আমি আপনার Biology Study Assistant। কীভাবে সাহায্য করতে পারি?',
+    'hi': 'Hello! Ask me any Biology question from Class 9-10 syllabus.',
+    'help': 'আমাকে Biology সম্পর্কিত প্রশ্ন করুন! যেমন: কোষ কী? সালোকসংশ্লেষণ কী? মানব হৃদপিণ্ডের গঠন ইত্যাদি।'
+}
 
-def clean_text(text):
-    """Clean and tokenize text (handles Bengali/English)"""
-    try:
-        # Try English tokenization
-        words_list = nltk.word_tokenize(text.lower())
-        words_list = [lemmatizer.lemmatize(w) for w in words_list if w.isalpha()]
-        return words_list
-    except:
-        # Fallback for Bengali
-        return text.lower().split()
+def simple_tokenize(text):
+    """Simple tokenizer without NLTK"""
+    text = text.lower()
+    # Remove punctuation
+    text = re.sub(r'[^\w\s]', '', text)
+    return text.split()
 
-def bag_of_words(text):
-    """Convert text to bag of words"""
-    text_words = clean_text(text)
-    bag = [0] * len(words)
+def get_keyword_response(user_input):
+    """Get response based on keywords"""
+    user_input = user_input.lower()
     
-    for s in text_words:
-        for i, w in enumerate(words):
-            if w == s:
-                bag[i] = 1
-                
-    return np.array(bag)
-
-def predict_topic(text):
-    """Predict which Biology topic the question belongs to"""
-    bow = bag_of_words(text)
-    res = model.predict(np.array([bow]), verbose=0)[0]
+    for keyword, response in KEYWORD_RESPONSES.items():
+        if keyword in user_input:
+            return response
     
-    # Set threshold
-    ERROR_THRESHOLD = 0.25
-    results = [[i, r] for i, r in enumerate(res) if r > ERROR_THRESHOLD]
-    results.sort(key=lambda x: x[1], reverse=True)
-    
-    topic_list = []
-    for r in results:
-        topic_list.append({
-            'topic': classes[r[0]],
-            'confidence': float(r[1])
-        })
-    
-    return topic_list
-
-def get_biology_answer(text):
-    """Get answer from Biology curriculum"""
-    topics = predict_topic(text)
-    
-    if not topics:
-        return "I'm not sure about that Biology topic. Could you ask about cells, tissues, human body systems, genetics, or ecology?"
-    
-    main_topic = topics[0]['topic']
-    
-    # Find matching intent
+    # Check in intents
     for intent in intents['intents']:
-        if intent['tag'] == main_topic:
-            # Return random response from that topic
-            return random.choice(intent['responses'])
+        for pattern in intent['patterns']:
+            if pattern.lower() in user_input:
+                return random.choice(intent['responses'])
     
-    return f"I know about {main_topic.replace('_', ' ')}, but need more specific question."
+    return "আমি Biology সম্পর্কিত প্রশ্নের উত্তর দিতে পারি। 'কোষ কী?' বা 'সালোকসংশ্লেষণ কী?' বা 'মানব পরিপাক তন্ত্র বর্ণনা করুন' জিজ্ঞাসা করুন।"
+
+def load_model():
+    """Try to load trained model"""
+    if not ML_AVAILABLE:
+        return None
+    
+    try:
+        if os.path.exists('chatbot_model.pkl'):
+            model = joblib.load('chatbot_model.pkl')
+            print("✅ Loaded trained model")
+            return model
+    except Exception as e:
+        print(f"⚠️ Could not load model: {e}")
+    
+    return None
+
+model = load_model()
 
 @app.route('/')
 def home():
-    """Render Biology chatbot interface"""
     return render_template('index.html')
 
 @app.route('/chat', methods=['POST'])
 def chat():
-    """Handle Biology questions"""
     try:
-        user_message = request.json.get('message', '').strip()
+        data = request.get_json()
+        user_message = data.get('message', '').strip()
         
         if not user_message:
-            return jsonify({
-                'response': 'Please ask a Biology question!',
-                'type': 'error'
-            })
+            return jsonify({'response': 'Please type a Biology question!'})
         
-        # Get Biology answer
-        response = get_biology_answer(user_message)
-        
-        # Log the question
-        print(f"📝 Question: {user_message[:50]}...")
+        # Get response
+        response = get_keyword_response(user_message)
         
         return jsonify({
             'response': response,
-            'type': 'biology'
+            'success': True
         })
         
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"Error: {e}")
         return jsonify({
-            'response': 'Sorry, having trouble with that Biology question. Try again!',
-            'type': 'error'
+            'response': 'দুঃখিত, সমস্যা হয়েছে! দয়া করে আবার চেষ্টা করুন।',
+            'success': False
         })
 
+@app.route('/health')
+def health():
+    return jsonify({
+        'status': 'healthy',
+        'service': 'biology-chatbot',
+        'nltk': NLTK_AVAILABLE,
+        'ml': ML_AVAILABLE,
+        'intents': len(intents['intents']) if intents else 0
+    })
+
 @app.route('/topics')
-def get_topics():
-    """Return list of Biology topics covered"""
-    topics = [cls.replace('_', ' ').title() for cls in classes]
-    return jsonify({'topics': topics, 'count': len(topics)})
+def topics():
+    """Return available topics"""
+    topics_list = []
+    if intents and 'intents' in intents:
+        topics_list = [intent['tag'].replace('_', ' ').title() for intent in intents['intents']]
+    
+    return jsonify({
+        'topics': topics_list,
+        'count': len(topics_list)
+    })
 
 if __name__ == '__main__':
-    print("\n🎯 Biology Topics Available:")
-    print("-" * 40)
-    for i, topic in enumerate(classes, 1):
-        print(f"{i:2d}. {topic.replace('_', ' ').title()}")
-    
-    print("\n" + "=" * 60)
-    print("🌐 Biology Study Assistant is READY!")
-    print("=" * 60)
-    print("\n💡 Ask questions like:")
-    print("   • 'What is photosynthesis?'")
-    print("   • 'মাইটোসিস কী?'")
-    print("   • 'Explain human digestive system'")
-    print("   • 'জৈববৈচিত্র্যের গুরুত্ব কী?'")
-    print("\n🚀 Starting server...")
-    print("📚 Open your browser and go to: http://localhost:5000")
-    print("=" * 60)
-    
-    app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
+    port = int(os.environ.get('PORT', 5000))
+    print(f"🚀 Starting Biology Chatbot on port {port}")
+    print(f"📚 Available topics: {len(intents['intents']) if intents else 0}")
+    app.run(host='0.0.0.0', port=port, debug=False)

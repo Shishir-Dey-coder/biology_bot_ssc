@@ -1,1 +1,1 @@
-web: gunicorn app:app
+web: cd $HOME && poetry run gunicorn app:app --bind 0.0.0.0:$PORT
